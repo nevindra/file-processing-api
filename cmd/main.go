@@ -15,12 +15,6 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
-type Image struct {
-	Width  int
-	Height int
-	Data   []byte
-}
-
 var req struct {
 	Width  int `json:"width"`
 	Height int `json:"height"`
@@ -33,7 +27,7 @@ func ResizeImage(filename string, newWidth, newHeight int) ([]byte, error) {
 		return ([]byte)(nil), err
 	}
 
-	// Convert byte data to io.Reader
+	// Convert byte data to a reader
 	imgDataIn := bytes.NewReader(imgFile)
 
 	// Decode the image
@@ -163,7 +157,8 @@ func main() {
 			return
 		}
 
-		// Determine the correct content type (you might want to return this from your ResizeImage function)
+		// Determine the correct content type
+		// TODO: return this from ResizeImage function)
 		var fileExtension string
 		if strings.HasSuffix(file.Filename, ".png") {
 			c.Writer.Header().Set("Content-Type", "image/png")
